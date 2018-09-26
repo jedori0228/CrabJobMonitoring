@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <title>Status of SKFlat v949cand2_1 Production</title>
+
+  <style>
+  p.Title{
+    text-align: center;
+    font-size: 40px;
+  }
+
+  @-webkit-keyframes blink
+  {
+    0%     { visibility: hidden }
+    50%    { visibility: hidden }
+    50.01% { visibility: visible }
+    100%   { visibility: visible }
+  }
+
+  td.Monaco_TotalEvent_Updating{
+    -webkit-animation: blink 0.5s infinite linear alternate;
+    font-family: monaco, Consolas, Lucida Console, monospace;
+    text-align: right;
+    color: red;
+  }
+
+  </style>
+
+</head>
+
+<body>
+
+<p class="Title"> Status of SKFlat v949cand2_1 Production </p>
+
+<table border = 1 align="center">
+  <tr>
+    <th>Sample</th>
+    <th>Unsubmitted</th>
+    <th>Idle</th>
+    <th>Running</th>
+    <th>Failed</th>
+    <th>Transferring</th>
+    <th>Finished</th>
+    <th>Total</th>
+    <th>%</th>
+  </tr>
