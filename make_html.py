@@ -1,9 +1,14 @@
 from SummarizeCrabStatus import *
 import datetime
 
+SKFlatTag = os.environ['SKFlatTag']
+CMSSW_BASE =  os.environ['CMSSW_BASE']
+
+os.system('touch DoneSamples_'+SKFlatTag+'.txt')
+
 JobDirs = [
-'/afs/cern.ch/work/j/jskim/SKFlatMaker/ForSubmission/CMSSW_9_4_9_cand2/src/SKFlatMaker/SKFlatMaker/script/CRAB3/v949cand2_1/2017/crab_submission_DATA/crab_projects/',
-'/afs/cern.ch/work/j/jskim/SKFlatMaker/ForSubmission/CMSSW_9_4_9_cand2/src/SKFlatMaker/SKFlatMaker/script/CRAB3/v949cand2_1/2017/crab_submission_MC/crab_projects/'
+CMSSW_BASE+'/src/SKFlatMaker/SKFlatMaker/script/CRAB3/'+SKFlatTag+'/2017/crab_submission_DATA/crab_projects/',
+CMSSW_BASE+'/src/SKFlatMaker/SKFlatMaker/script/CRAB3/'+SKFlatTag+'/2017/crab_submission_MC/crab_projects/'
 ]
 
 Skeleton_path = 'Skeleton_Status.html'
@@ -15,13 +20,14 @@ timestamp =  JobStartTime.strftime('%Y-%m-%d %H:%M:%S')+' CERN'
 
 print>>out,'''<body>
 
-<p class="Title"> Status of SKFlat v949cand2_1 Production </p>
+<p class="Title"> Status of SKFlat {1} Production </p>
 <p class="Clock">Last updated time : {0}</p>
 
 <table border = 1 align="center">
   <tr>
     <th>Sample</th>
     <th>Unsubmitted</th>
+    <th>Cooloff</th>
     <th>Idle</th>
     <th>Running</th>
     <th>Failed</th>
@@ -30,7 +36,7 @@ print>>out,'''<body>
     <th>Total</th>
     <th>%</th>
   </tr>
-'''.format(timestamp)
+'''.format(timestamp,SKFlatTag)
 
 for JobDir in JobDirs:
 

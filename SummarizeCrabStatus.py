@@ -9,12 +9,22 @@ def CheckStatus(line, status):
 
 def SummarizeCrabStatus(out,crabdir, SamplePD):
 
+  SKFlatTag = os.environ['SKFlatTag']
+
+  dones = open('DoneSamples_'+SKFlatTag+'.txt').readlines()
+  for done in dones:
+    words = done.split()
+    if words[0]==done:
+      out.write( done.replace(done+'\t','') )
+      return 0
+
   os.system('crab status -d '+crabdir+' > tmp.txt')
   lines = open('tmp.txt').readlines()
   os.system('rm tmp.txt')
 
   status = [
   'unsubmitted',
+  'cooloff',
   'idle',
   'running',
   'failed',
@@ -22,6 +32,7 @@ def SummarizeCrabStatus(out,crabdir, SamplePD):
   'finished',
   ]
   colors = [
+  'gray',
   'gray',
   'gray',
   'orange',
@@ -32,23 +43,26 @@ def SummarizeCrabStatus(out,crabdir, SamplePD):
 
   StatusLines = []
   N_Total = ""
+
+  ToWrite = ""
+
   for i in range(0,len(lines)):
     line = lines[i]
     if "Jobs status:" in line:
       StatusLines.append( line.replace('Jobs status:','') )
+      words = line.replace('Jobs status:','').split('/')
+      N_Total = words[len(words)-1].replace(')','').strip('\n')
 
       j = i+1
       nextline = lines[j]
       while CheckStatus(nextline,status):
         StatusLines.append(nextline)
-        words = nextline.split('/')
-        N_Total = words[len(words)-1].replace(')','').strip('\n')
         j = j+1
         nextline = lines[j]
       break
 
-  print>>out, '  <tr>'
-  print>>out, '    <td align="left">'+SamplePD+'</td>'
+  ToWrite  = '  <tr>'+'\n'
+  ToWrite += '    <td align="left">'+SamplePD+'</td>'+'\n'
 
   Finished = 0
   for i in range(0,len(status)):
@@ -69,7 +83,7 @@ def SummarizeCrabStatus(out,crabdir, SamplePD):
       num = words_Frac[0]
       den = words_Frac[1]
       if st=="finished":
-        Finished = float(num)
+        Finished = int(num)
       if N_Total!=den:
         print "#### ERROR ####"
         print "N_Total = "+N_Total
@@ -79,14 +93,22 @@ def SummarizeCrabStatus(out,crabdir, SamplePD):
         print "---- Printing StatusLines ----"
         print StatusLines
 
-      print>>out, '    <td align="center"><font color='+color+'>'+num+'</font></td>'
+      ToWrite += '    <td align="center"><font color='+color+'>'+num+'</font></td>'+'\n'
 
     if not ThisStatusExist:
-      print>>out, '    <td align="center"><font color='+color+'>0</font></td>'
 
-  print>>out, '    <td align="center">'+N_Total+'</td>'
+      ToWrite += '    <td align="center"><font color='+color+'>0</font></td>'+'\n'
+
+  ToWrite += '    <td align="center">'+N_Total+'</td>'+'\n'
   if int(Finished)==int(float(N_Total)):
-    print>>out, '    <td align="center">'+str(round(100.*Finished/float(N_Total),2))+'</td>'
+    ToWrite += '    <td align="center">'+str(round(100.*Finished/float(N_Total),2))+'</td>'+'\n'
   else:
-    print>>out, '    <td align="center">'+str(round(100.*Finished/float(N_Total),2))+'</td>'
-  print>>out, '  </tr>'
+    ToWrite += '    <td align="center">'+str(round(100.*Finished/float(N_Total),2))+'</td>'+'\n'
+  ToWrite += '  </tr>'+'\n'
+
+  if ( Finished==int(N_Total) ) or ( "Done" in SamplePD ):
+    update_dones = open('DoneSamples_'+SKFlatTag+'.txt','a')
+    update_dones.write(SamplePD+'\t'+ToWrite)
+    update_dones.close()
+
+  out.write(ToWrite)
