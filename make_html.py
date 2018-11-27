@@ -1,14 +1,20 @@
 from SummarizeCrabStatus import *
 import datetime
+import argparse
+
+parser = argparse.ArgumentParser(description='options')
+parser.add_argument('-y', dest='Year', default="2016")
+args = parser.parse_args()
 
 SKFlatTag = os.environ['SKFlatTag']
+#SKFlatTag = "v949cand2_2"
 CMSSW_BASE =  os.environ['CMSSW_BASE']
 
 os.system('touch DoneSamples_'+SKFlatTag+'.txt')
 
 JobDirs = [
-CMSSW_BASE+'/src/SKFlatMaker/SKFlatMaker/script/CRAB3/'+SKFlatTag+'/2017/crab_submission_DATA/crab_projects/',
-CMSSW_BASE+'/src/SKFlatMaker/SKFlatMaker/script/CRAB3/'+SKFlatTag+'/2017/crab_submission_MC/crab_projects/'
+CMSSW_BASE+'/src/SKFlatMaker/SKFlatMaker/script/CRAB3/'+SKFlatTag+'/'+args.Year+'/crab_submission_DATA/crab_projects/',
+CMSSW_BASE+'/src/SKFlatMaker/SKFlatMaker/script/CRAB3/'+SKFlatTag+'/'+args.Year+'/crab_submission_MC/crab_projects/'
 ]
 
 Skeleton_path = 'Skeleton_Status.html'
@@ -20,7 +26,7 @@ timestamp =  JobStartTime.strftime('%Y-%m-%d %H:%M:%S')+' CERN'
 
 print>>out,'''<body>
 
-<p class="Title"> Status of SKFlat {1} Production </p>
+<p class="Title"> Status of SKFlat {1} Production ({2})</p>
 <p class="Clock">Last updated time : {0}</p>
 
 <table border = 1 align="center">
@@ -36,7 +42,7 @@ print>>out,'''<body>
     <th>Total</th>
     <th>%</th>
   </tr>
-'''.format(timestamp,SKFlatTag)
+'''.format(timestamp,SKFlatTag,args.Year)
 
 for JobDir in JobDirs:
 
@@ -61,4 +67,4 @@ print>>out,'''</table>
 '''
 
 out.close()
-os.system('mv tmp_Status.html Status.html')
+os.system('mv tmp_Status.html Status_'+args.Year+'.html')

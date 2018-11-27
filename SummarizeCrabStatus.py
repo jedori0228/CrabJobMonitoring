@@ -7,15 +7,26 @@ def CheckStatus(line, status):
       return True
   return False
 
-def SummarizeCrabStatus(out,crabdir, SamplePD):
+def SummarizeCrabStatus(out,crabdir,SamplePD):
 
   SKFlatTag = os.environ['SKFlatTag']
 
   dones = open('DoneSamples_'+SKFlatTag+'.txt').readlines()
-  for done in dones:
+  for a in range(0,len(dones)):
+    done = dones[a]
+    if "<tr>" not in done:
+      continue
     words = done.split()
-    if words[0]==done:
-      out.write( done.replace(done+'\t','') )
+    if words[0]==SamplePD:
+
+      for b in range(0,len(dones)-a):
+        thisline = dones[a+b]
+        if "</tr>" in thisline:
+          break
+        towrite = thisline
+        if b==0:
+          towrite = thisline.replace(SamplePD+'\t','')
+        out.write( towrite )
       return 0
 
   os.system('crab status -d '+crabdir+' > tmp.txt')
