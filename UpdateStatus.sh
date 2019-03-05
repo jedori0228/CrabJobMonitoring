@@ -1,13 +1,19 @@
 #!/bin/bash
 
 firstletter=`echo $USER | head -c 1`
+mkdir -p $SKFlatTag
 mkdir -p /eos/user/$firstletter/$USER/www/SKFlat/ProductionStatus/$SKFlatTag/
 
 while true; do
 
-  for YEAR in 2016 2017
+  echo "Running.............."
+
+  for YEAR in 2016 2017 2018
   do
-    outname="Status_"$YEAR".html"
+
+    echo "Year "$YEAR" is running now.."
+
+    outname=$SKFlatTag"/Status_"$YEAR".html"
     python make_html.py -y $YEAR
 
     cmd_TAGHERE="sed -i 's/TAGHERE/"$SKFlatTag"/g' "$outname
@@ -17,6 +23,10 @@ while true; do
 
     cp $outname /eos/user/$firstletter/$USER/www/SKFlat/ProductionStatus/$SKFlatTag/
   done
+
+  cd /afs/cern.ch/work/j/jskim/SKFlatMaker/ForSubmission/Run2Legacy_v1__CMSSW_9_4_10/src/SKFlatMaker/SKFlatMaker/script/CRAB3
+  source cleanup_crabdirlogs.sh
+  cd -
 
   echo "#####################################################"
   echo "Sleeping...."

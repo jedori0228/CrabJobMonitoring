@@ -7,7 +7,6 @@ parser.add_argument('-y', dest='Year', default="2016")
 args = parser.parse_args()
 
 SKFlatTag = os.environ['SKFlatTag']
-#SKFlatTag = "v949cand2_2"
 CMSSW_BASE =  os.environ['CMSSW_BASE']
 
 os.system('touch DoneSamples_'+SKFlatTag+'.txt')
@@ -18,8 +17,8 @@ CMSSW_BASE+'/src/SKFlatMaker/SKFlatMaker/script/CRAB3/'+SKFlatTag+'/'+args.Year+
 ]
 
 Skeleton_path = 'Skeleton_Status.html'
-os.system('cp '+Skeleton_path+' tmp_Status.html')
-out = open('tmp_Status.html','a')
+os.system('cp '+Skeleton_path+' '+SKFlatTag+'/tmp_Status.html')
+out = open(SKFlatTag+'/tmp_Status.html','a')
 
 JobStartTime = datetime.datetime.now()
 timestamp =  JobStartTime.strftime('%Y-%m-%d %H:%M:%S')+' CERN'
@@ -46,12 +45,14 @@ print>>out,'''<body>
 
 for JobDir in JobDirs:
 
-  os.system('ls -1d '+JobDir+'crab_* > tmp.txt')
-  lines = open('tmp.txt').readlines()
-  os.system('rm tmp.txt')
+  os.system('ls -1d '+JobDir+'crab_* > '+SKFlatTag+'/tmp.txt')
+  lines = open(SKFlatTag+'/tmp.txt').readlines()
+  os.system('rm '+SKFlatTag+'/tmp.txt')
   for line in lines:
     line = line.strip('\n')
     SamplePD = line.replace(JobDir,'').replace('crab_','')
+
+    print SamplePD
 
     SummarizeCrabStatus(out,line,SamplePD)
 
@@ -67,4 +68,4 @@ print>>out,'''</table>
 '''
 
 out.close()
-os.system('mv tmp_Status.html Status_'+args.Year+'.html')
+os.system('mv '+SKFlatTag+'/tmp_Status.html '+SKFlatTag+'/Status_'+args.Year+'.html')
