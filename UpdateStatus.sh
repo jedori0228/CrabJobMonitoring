@@ -24,7 +24,7 @@ while true; do
     cp $outname /eos/user/$firstletter/$USER/www/SKFlat/ProductionStatus/$SKFlatTag/
   done
 
-  cd /afs/cern.ch/work/j/jskim/SKFlatMaker/ForSubmission/Run2Legacy_v1__CMSSW_9_4_10/src/SKFlatMaker/SKFlatMaker/script/CRAB3
+  cd $CMSSW_BASE/src/SKFlatMaker/SKFlatMaker/script/CRAB3
   source cleanup_crabdirlogs.sh
   cd -
 
