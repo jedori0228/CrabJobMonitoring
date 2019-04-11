@@ -3,11 +3,14 @@
 ################################
 ##---- CHANGE ME
 user_email="jalmond@cern.ch"
+#website_dir="/eos/user/" 
+website_dir="/afs/cern.ch/user/" 
 ################################
 
 firstletter=`echo $USER | head -c 1`
 mkdir -p $SKFlatTag
-mkdir -p /afs/cern.ch/user/$firstletter/$USER/www/SKFlat/ProductionStatus/$SKFlatTag/
+mkdir -p $website_dir$firstletter/$USER/www/SKFlat/ProductionStatus/$SKFlatTag/
+################################                                                                                                                                                                            
 
 ##-- setup crab3 since crab status and resubmittion is needed
 source /cvmfs/cms.cern.ch/crab3/crab.sh
