@@ -1,12 +1,15 @@
 #!/bin/bash
 
-
+################################
+##---- CHANGE ME
 user_email="jalmond@cern.ch"
+################################
+
 firstletter=`echo $USER | head -c 1`
 mkdir -p $SKFlatTag
 mkdir -p /afs/cern.ch/user/$firstletter/$USER/www/SKFlat/ProductionStatus/$SKFlatTag/
 
-##setup crab3
+##-- setup crab3 since crab status and resubmittion is needed
 source /cvmfs/cms.cern.ch/crab3/crab.sh
 
 if [ -f "DoneSamples_"+$SKFlatTag+".txt" ];
@@ -14,8 +17,10 @@ then
     rm  "DoneSamples_"+$SKFlatTag+".txt"
 fi
 
+##-- new script that checks grid proxy and any other setup
 python setup_job.py -x $user_email
 
+##-- exit script if grid proxy is not setup
 job_status=$?
 re='^[0-9]+$'
 if ! [[ $job_status =~ $re ]] ; then
@@ -24,7 +29,7 @@ fi
 
 if [ $job_status -eq 10 ];
 then
-    echo "Error....  quitting"
+    echo "Error in setup....  quitting"
     return
 fi
 
@@ -48,7 +53,7 @@ while true; do
 
     if [ $job_status -eq 10 ];
     then
-	echo "Error....  quitting"
+	echo "Error in make_html.py....  quitting"
 	return
     fi
 
