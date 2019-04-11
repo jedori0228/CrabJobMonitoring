@@ -173,9 +173,5 @@ def SummarizeCrabStatus(out,crabdir,SamplePD,submittion_dir):
       update_dones = open('DoneSamples_'+SKFlatTag+'.txt','a')
       update_dones.write(SamplePD+'\t'+ToWrite)
       update_dones.close()
-    #else:
-    #  update_dones = open('DoneSamples_'+SKFlatTag+'.txt','a')
-    #  update_dones.write(SamplePD+'\t'+ToWrite)
-    #  update_dones.close()
 
   out.write(ToWrite)
