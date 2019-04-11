@@ -63,9 +63,6 @@ while true; do
   
   cd $CMSSW_BASE/src/SKFlatMaker/SKFlatMaker/script/CRAB3/
 
-
-
-
   source cleanup_crabdirlogs.sh
   cd -
 
