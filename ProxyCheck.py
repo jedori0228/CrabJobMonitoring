@@ -4,23 +4,6 @@ from datetime import datetime, timedelta
 
 time_renewal=12 #### in hours : This is time before ticket renewal stops when email is sent to let user know to renew manually the kerberos ticket
 
-
-def CheckProxy():
-
-    ### function to check that the grid certificate is set
-    
-    os.system("voms-proxy-info > proxylog")
-    proxy_check = open ("proxylog", "r")
-    proxy_ok=False
-    for line in proxy_check:
-        if "timeleft" in line:
-            proxy_ok=True
-    proxy_check.close()
-    os.system("rm proxylog")
-    return proxy_ok
-
-
-
 ###########################################
 def CheckKerbos(email_user):
 
