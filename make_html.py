@@ -15,7 +15,7 @@ user_email = args.email
 ### function checks proxy is set
 
 Kerb_Stat =  CheckKerbos(user_email)
-if Kerb_Stat > -1:
+if Kerb_Stat == 0:
   print "ticket for machine permission is run out: setup new shell or use kinit to reset kerberos"
   sys.exit(10)
   
