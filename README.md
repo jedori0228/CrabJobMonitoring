@@ -2,7 +2,10 @@
 
 Example : https://jskim.web.cern.ch/jskim/Public/CrabJobMonitoring/Status.html
 
-```bash
-## Edit UpdateStatus.sh
+You must set cmssw enviroment variables first (i.e., cmsenv), with your crab-submission working directory.
+
+Then run,
+
+```
 source UpdateStatus.sh
 ```
