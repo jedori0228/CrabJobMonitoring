@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import os,time
 from datetime import datetime, timedelta
 from TimeTools import ParseTicketTime
@@ -101,12 +103,14 @@ def CheckKerberos():
   if DoMail:
 
     import SendEmail
-    from config import LogEmail
+    from MonitConfig import UserInfo
 
     email_content  = ticket_info
     email_content += "\n**********************************************************\n"
     email_content += alerting_msg
     email_content += "**********************************************************\n"
+
+    LogEmail = UserInfo['LogEmail']
 
     if LogEmail != "":
       SendEmail.SendEmail(LogEmail, LogEmail, '[CrabJobMonitoring] lxplus Kerberos ticket', email_content)

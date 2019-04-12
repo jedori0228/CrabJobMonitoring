@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import os,time
 from datetime import datetime, timedelta
 from TimeTools import ParseTicketTime
@@ -53,12 +55,14 @@ def CheckProxy():
   if DoMail:
 
     import SendEmail
-    from config import LogEmail
+    from MonitConfig import UserInfo
 
     email_content  = 'GRID Proxy time left (HH:MM:SS) : '+ProxyTimeLeft
     email_content += "\n**********************************************************\n"
     email_content += alerting_msg
     email_content += "**********************************************************\n"
+
+    LogEmail = UserInfo['LogEmail']
 
     if LogEmail != "":
       SendEmail.SendEmail(LogEmail, LogEmail, '[CrabJobMonitoring] GRID Proxy', email_content)
