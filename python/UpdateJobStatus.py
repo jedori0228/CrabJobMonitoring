@@ -17,6 +17,10 @@ NewJobStatus_file = open(NewJobStatus_filename,'wb')
 
 for CrabDir in CrabDirs:
 
+  if not os.path.isdir(CrabDir):
+    print "@@@@ Dir not exists : "+CrabDir
+    continue
+
   Dirs = subprocess.check_output('ls -1d '+CrabDir+'/crab_*',shell=True).strip('\n').split('\n')
   for Dir in Dirs:
 

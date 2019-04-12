@@ -19,7 +19,7 @@ HTMLfilepath = HTMLDest+'/'+MonitName+'.html'
 out = open(HTMLfilepath,'w')
 
 MonitURL = URLPrefix+HTMLfilepath.replace(WEBDir,'')
-print MonitURL
+print "@@@@ URL : "+MonitURL
 
 JobStartTime = datetime.datetime.now()
 timestamp =  JobStartTime.strftime('%Y-%m-%d %H:%M:%S')+' CERN'
