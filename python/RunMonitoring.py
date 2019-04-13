@@ -19,6 +19,7 @@ if args.Config=="":
   exit()
 
 config = 'Configs.'+args.Config
+exec('from '+config+' import *')
 
 PrepareMonitoring(config)
 
@@ -33,5 +34,5 @@ while True:
   print "Sleeping...."
   print "#####################################################"
 
-  time.sleep(300)
+  time.sleep(CRABInfo['RunEvery'])
   os.system('kinit -R')
