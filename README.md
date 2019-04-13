@@ -6,9 +6,9 @@ You must set cmssw enviroment variables first (i.e., cmsenv), with your crab-sub
 
 create a python file, based on python/MonitConfig.py
 
-E.g., python/MyConfig.py
+E.g., python/Configs/MyConfig.py
 
-Edit python/MyConfig.py, and then
+Edit python/Configs/MyConfig.py, and then
 
 
 ```

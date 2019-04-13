@@ -18,7 +18,7 @@ if args.Config=="":
   print "Config file is empty"
   exit()
 
-config = args.Config
+config = 'Configs.'+args.Config
 
 PrepareMonitoring(config)
 
