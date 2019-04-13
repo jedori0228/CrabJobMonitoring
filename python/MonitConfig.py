@@ -18,10 +18,10 @@ CRABInfo = {
   'TableContents' : [
     HTMLTableRow( 'Sample', 'black', 'left' ),
     #HTMLTableRow( 'Scheduler', 'black', 'center' ),
-    HTMLTableRow( 'USER', 'black', 'center' ),
+    #HTMLTableRow( 'USER', 'black', 'center' ),
     HTMLTableRow( 'Unsubmitted', 'gray', 'center' ),
     HTMLTableRow( 'Cooloff', 'gray', 'center' ),
-    HTMLTableRow( 'Idle', 'graa', 'center' ),
+    HTMLTableRow( 'Idle', 'gray', 'center' ),
     HTMLTableRow( 'Running', 'orange', 'center' ),
     HTMLTableRow( 'Failed', 'red', 'center' ),
     HTMLTableRow( 'Transferring', 'black', 'center' ),

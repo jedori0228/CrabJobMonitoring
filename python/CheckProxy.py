@@ -7,7 +7,7 @@ import subprocess
 
 time_renewal=12 #### in hours : This is time before ticket renewal stops when email is sent to let user know to renew manually the kerberos ticket
 
-def CheckProxy():
+def CheckProxy(config):
 
   DoMail=False
   ProxyTimeLeft = ''
@@ -56,7 +56,7 @@ def CheckProxy():
   if DoMail:
 
     import SendEmail
-    from MonitConfig import UserInfo
+    exec('from '+config+' import UserInfo')
 
     email_content  = 'GRID Proxy time left (HH:MM:SS) : '+ProxyTimeLeft
     email_content += "\n**********************************************************\n"

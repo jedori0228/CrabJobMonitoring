@@ -7,7 +7,7 @@ import subprocess
 
 time_renewal=12 #### in hours : This is time before ticket renewal stops when email is sent to let user know to renew manually the kerberos ticket
 
-def CheckKerberos():
+def CheckKerberos(config):
 
   ### Only send email if terminal kerberos ticket is about to expire and user has set email
   DoMail=False
@@ -95,7 +95,7 @@ def CheckKerberos():
   if renewal_expiring: 
     ### ticket is valid and exists, but is close to expiration and will need password to reset
     alerting_msg += "Ticket is expiring soon\n"
-    alerting_msg += "Please log in to "++USER+"@"HOSTNAME+" to renew the ticket\n"
+    alerting_msg += "Please log in to "++USER+"@"+HOSTNAME+" to renew the ticket\n"
     DoMail=True
     status = 1
 
@@ -104,7 +104,7 @@ def CheckKerberos():
   if DoMail:
 
     import SendEmail
-    from MonitConfig import UserInfo
+    exec('from '+config+' import UserInfo')
 
     email_content  = ticket_info
     email_content += "\n**********************************************************\n"

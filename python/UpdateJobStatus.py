@@ -2,56 +2,59 @@
 
 import os
 import subprocess
-from MonitConfig import *
 import pickle
 from ReadCrabStatus import ReadCrabStatus
 from CrabJobStatus import CrabJobStatus
 
-MonitWD = os.environ['MonitWD']
-CrabDirs = CRABInfo['CrabDirs']
-MonitName = CRABInfo['MonitName']
+def UpdateJobStatus(config):
 
-NewJobStatus = []
-NewJobStatus_filename = MonitWD+'/pkl/JobStatus_'+MonitName+'.pkl'
-NewJobStatus_file = open(NewJobStatus_filename,'wb')
+  exec('from '+config+' import *')
 
-for CrabDir in CrabDirs:
+  MonitWD = os.environ['MonitWD']
+  CrabDirs = CRABInfo['CrabDirs']
+  MonitName = CRABInfo['MonitName']
 
-  if not os.path.isdir(CrabDir):
-    print "@@@@ Dir not exists : "+CrabDir
-    continue
+  NewJobStatus = []
+  NewJobStatus_filename = MonitWD+'/pkl/JobStatus_'+MonitName+'.pkl'
+  NewJobStatus_file = open(NewJobStatus_filename,'wb')
 
-  Dirs = subprocess.check_output('ls -1d '+CrabDir+'/crab_*',shell=True).strip('\n').split('\n')
-  for Dir in Dirs:
+  for CrabDir in CrabDirs:
 
-    crab_dir = Dir.split('/')[-1]
-    this_Sample = crab_dir.replace('crab_','')
-    crablog = open(Dir+'/crab.log').readlines()
-    this_TimeStamp = ''
-    for line in crablog:
-      if 'Task name' in line:
-        this_TimeStamp = line.split()[-1].split(':')[0]
-        break
-    print '@@@@ '+this_Sample+'\t'+this_TimeStamp
-    if len(crablog)>10000:
-      #### if we keep runing crab status, the file size of crab.log goes really hig
-      os.system(Dir+'/crab.log')
+    if not os.path.isdir(CrabDir):
+      print "@@@@ Dir not exists : "+CrabDir
+      continue
 
-    ThisCrabStatus = CrabJobStatus()
+    Dirs = subprocess.check_output('ls -1d '+CrabDir+'/crab_*',shell=True).strip('\n').split('\n')
+    for Dir in Dirs:
 
-    #### Now, run ReadCrabStatus()
-    CrabStatus = subprocess.check_output('crab status -d '+Dir,shell=True).split('\n')
-    ThisCrabStatus = ReadCrabStatus( CrabStatus )
+      crab_dir = Dir.split('/')[-1]
+      this_Sample = crab_dir.replace('crab_','')
+      crablog = open(Dir+'/crab.log').readlines()
+      this_TimeStamp = ''
+      for line in crablog:
+        if 'Task name' in line:
+          this_TimeStamp = line.split()[-1].split(':')[0]
+          break
+      print '@@@@ '+this_Sample+'\t'+this_TimeStamp
+      if len(crablog)>10000:
+        #### if we keep runing crab status, the file size of crab.log goes really hig
+        os.system(Dir+'/crab.log')
 
-    #### if has failed job, resubmit
-    if ThisCrabStatus.Failed() > 0:
-      print '--> has '+str(ThisCrabStatus.Failed())+' failed jobs, resubmitting...'
-      os.system('crab resubmit -d '+Dir)
+      ThisCrabStatus = CrabJobStatus()
 
-    NewJobStatus.append(ThisCrabStatus)
+      #### Now, run ReadCrabStatus()
+      CrabStatus = subprocess.check_output('crab status -d '+Dir,shell=True).split('\n')
+      ThisCrabStatus = ReadCrabStatus( CrabStatus )
 
-pickle.dump(NewJobStatus, NewJobStatus_file)
-NewJobStatus_file.close()
+      #### if has failed job, resubmit
+      if ThisCrabStatus.Failed() > 0:
+        print '--> has '+str(ThisCrabStatus.Failed())+' failed jobs, resubmitting...'
+        os.system('crab resubmit -d '+Dir)
 
-#print '@@@@ New status :'
-#print NewJobStatus
+      NewJobStatus.append(ThisCrabStatus)
+
+  pickle.dump(NewJobStatus, NewJobStatus_file)
+  NewJobStatus_file.close()
+
+  #print '@@@@ New status :'
+  #print NewJobStatus

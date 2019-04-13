@@ -16,6 +16,10 @@ while [[ $? == 1 ]]; do
   voms-proxy-init --voms cms --valid 192:00
 done
 
+## set crab
+echo "@@@@ set crab3"
+source /cvmfs/cms.cern.ch/crab3/crab.sh
+
 export MonitWD=`pwd`
 export PATH=./bin/:./python/:$PATH
 export PYTHONPATH=./python/:$PYTHONPATH

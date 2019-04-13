@@ -3,39 +3,38 @@ import os
 import datetime
 import argparse
 import pickle
-from MonitConfig import *
 
-  # 'HTMLDest' : '/eos/user/j/jskim/www/HNWR_13TeV/EGammaTnP/CRARBStatus/',
-  # 'WEBDir' : '/eos/user/j/jskim/www/',
-  # 'URLPrefix' : 'https://jskim.web.cern.ch/jskim/',
+def MakeHTML(config):
 
-HTMLDest = UserInfo['HTMLDest']
-WEBDir = UserInfo['WEBDir']
-URLPrefix = UserInfo['URLPrefix']
-MonitName = CRABInfo['MonitName']
-MonitWD = os.environ['MonitWD']
+  exec('from '+config+' import *')
 
-HTMLfilepath = HTMLDest+'/'+MonitName+'.html'
-out = open(HTMLfilepath,'w')
+  HTMLDest = UserInfo['HTMLDest']
+  WEBDir = UserInfo['WEBDir']
+  URLPrefix = UserInfo['URLPrefix']
+  MonitName = CRABInfo['MonitName']
+  MonitWD = os.environ['MonitWD']
 
-MonitURL = URLPrefix+HTMLfilepath.replace(WEBDir,'')
-print "@@@@ URL : "+MonitURL
+  HTMLfilepath = HTMLDest+'/'+MonitName+'.html'
+  out = open(HTMLfilepath,'w')
 
-JobStartTime = datetime.datetime.now()
-timestamp =  JobStartTime.strftime('%Y-%m-%d %H:%M:%S')+' CERN'
+  MonitURL = URLPrefix+HTMLfilepath.replace(WEBDir,'')
+  print "@@@@ URL : "+MonitURL
 
-#### first writhe the header
-htmlheaderlines = open(MonitWD+'/tmp/Skeleton_Status.html').readlines()
-for line in htmlheaderlines:
-  out.write(line)
+  JobStartTime = datetime.datetime.now()
+  timestamp =  JobStartTime.strftime('%Y-%m-%d %H:%M:%S')+' CERN'
 
-#### Now, body
-#### Get TableContents from MonitConfig
-TableContents = CRABInfo['TableContents']
+  #### first writhe the header
+  htmlheaderlines = open(MonitWD+'/tmp/Skeleton_Status.html').readlines()
+  for line in htmlheaderlines:
+    out.write(line)
 
-#### First right the headings
+  #### Now, body
+  #### Get TableContents from config
+  TableContents = CRABInfo['TableContents']
 
-print>>out,'''<body>
+  #### First right the headings
+
+  print>>out,'''<body>
 
 <p class="Title">Status of {1}</p>
 <p class="Clock">Last updated time : {0}</p>
@@ -43,44 +42,44 @@ print>>out,'''<body>
 <table border = 1 align="center">
   <tr>'''.format(timestamp,MonitName)
 
-for TableContent in TableContents:
-  out.write('    <th>'+TableContent.VarName+'</th>\n')
-out.write('  </tr>\n')
+  for TableContent in TableContents:
+    out.write('    <th>'+TableContent.VarName+'</th>\n')
+  out.write('  </tr>\n')
 
-#### Now read JobStatus
+  #### Now read JobStatus
 
-JobStatus_file = open(MonitWD+'/pkl/JobStatus_'+MonitName+'.pkl', 'rb')
-JobStatus = pickle.load(JobStatus_file)
+  JobStatus_file = open(MonitWD+'/pkl/JobStatus_'+MonitName+'.pkl', 'rb')
+  JobStatus = pickle.load(JobStatus_file)
 
-for js in JobStatus:
+  for js in JobStatus:
 
-  ToWrite = '  <tr>'+'\n'
+    ToWrite = '  <tr>'+'\n'
 
-  if js.SubmitFail():
+    if js.SubmitFail():
 
-    #### If submission failed,
-    #### write sample name, write SUBMITFAILED in 'Total', and everything else empty
-    for TableContent in TableContents:
-      if TableContent=='Sample':
+      #### If submission failed,
+      #### write sample name, write SUBMITFAILED in 'Total', and everything else empty
+      for TableContent in TableContents:
+        if TableContent=='Sample':
+          program = '''ToWrite += TableContent.GetHTMLLine(str(js.'''+TableContent.VarName+'''()))'''
+          exec(program)
+        elif TableContent=='Total':
+          ToWrite += '    <td align="center"><font color=red>SUBMITFAILED</font></td>'+'\n'
+        else:
+          ToWrite += '    <td align="center"></td>'+'\n'
+
+    else:
+
+      #### If jobs running, write them..
+
+      for TableContent in TableContents:
         program = '''ToWrite += TableContent.GetHTMLLine(str(js.'''+TableContent.VarName+'''()))'''
         exec(program)
-      elif TableContent=='Total':
-        ToWrite += '    <td align="center"><font color=red>SUBMITFAILED</font></td>'+'\n'
-      else:
-        ToWrite += '    <td align="center"></td>'+'\n'
 
-  else:
+    ToWrite += '  </tr>\n'
+    out.write(ToWrite)
 
-    #### If jobs running, write them..
-
-    for TableContent in TableContents:
-      program = '''ToWrite += TableContent.GetHTMLLine(str(js.'''+TableContent.VarName+'''()))'''
-      exec(program)
-
-  ToWrite += '  </tr>\n'
-  out.write(ToWrite)
-
-print>>out,'''</table>
+  print>>out,'''</table>
 
 
 
@@ -90,4 +89,4 @@ print>>out,'''</table>
 </html>
 '''
 
-out.close()
+  out.close()
