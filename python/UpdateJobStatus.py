@@ -45,7 +45,7 @@ for CrabDir in CrabDirs:
 
     #### if has failed job, resubmit
     if ThisCrabStatus.Failed() > 0:
-      print '--> has '+str(ThisCrabStatus.Failed)+' failed jobs, resubmitting...'
+      print '--> has '+str(ThisCrabStatus.Failed())+' failed jobs, resubmitting...'
       os.system('crab resubmit -d '+Dir)
 
     NewJobStatus.append(ThisCrabStatus)

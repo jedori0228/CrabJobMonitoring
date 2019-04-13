@@ -15,6 +15,7 @@ def CheckProxy():
   status = 0
 
   HOSTNAME = os.environ['HOSTNAME']
+  USER = os.environ['USER']
 
   ### First check if we have it set
   ProxyInfoCheck = subprocess.call('voms-proxy-info &> /dev/null',shell=True)
@@ -23,7 +24,7 @@ def CheckProxy():
     DoMail = True
     status = 1
     alerting_msg  = 'GRID proxy is NOT SET\n'
-    alerting_msg += "Please log in to "+HOSTNAME+", and run\n"
+    alerting_msg += "Please log in to "+USER+"@"+HOSTNAME+", and run\n"
     alerting_msg += "voms-proxy-init --voms cms --valid 192:00\n"
 
   else:
@@ -36,7 +37,7 @@ def CheckProxy():
       DoMail = True
       status = 1
       alerting_msg = 'GRID proxy has been EXPIRED\n'
-      alerting_msg += "Please log in to "+HOSTNAME+", and run\n"
+      alerting_msg += "Please log in to "+USER+"@"+HOSTNAME+", and run\n"
       alerting_msg += "voms-proxy-init --voms cms --valid 192:00\n"
 
     else:
@@ -48,7 +49,7 @@ def CheckProxy():
         status = 1
 
         alerting_msg += "GRID proxy is EXPIRING SOON\n"
-        alerting_msg += "Please log in to "+HOSTNAME+", and run\n"
+        alerting_msg += "Please log in to "+USER+"@"+HOSTNAME+", and run\n"
         alerting_msg += "voms-proxy-init --voms cms --valid 192:00\n"
 
 

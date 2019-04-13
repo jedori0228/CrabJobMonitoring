@@ -12,6 +12,7 @@ def CheckKerberos():
   ### Only send email if terminal kerberos ticket is about to expire and user has set email
   DoMail=False
   HOSTNAME = os.environ['HOSTNAME']
+  USER = os.environ['USER']
 
   ### klist show two thinigs;
 
@@ -82,19 +83,19 @@ def CheckKerberos():
   alerting_msg = ''
   if not afs_kerb:
     alerting_msg  = "Kerberos ticket is NOT AVAILABLE."
-    alerting_msg += "Please log in to "+HOSTNAME+" to renew the ticket\n"
+    alerting_msg += "Please log in to "+USER+"@"+HOSTNAME+" to renew the ticket\n"
     DoMail=True
     status= 1
   if not ticket_is_valid:
     alerting_msg  = "Kerberos ticket has been EXPIRED."
-    alerting_msg += "Please log in to "+HOSTNAME+" to renew the ticket\n"
+    alerting_msg += "Please log in to "+USER+"@"+HOSTNAME+" to renew the ticket\n"
     DoMail=True
     status= 1
 
   if renewal_expiring: 
     ### ticket is valid and exists, but is close to expiration and will need password to reset
     alerting_msg += "Ticket is expiring soon\n"
-    alerting_msg += "Please log in to "+HOSTNAME+" to renew the ticket\n"
+    alerting_msg += "Please log in to "++USER+"@"HOSTNAME+" to renew the ticket\n"
     DoMail=True
     status = 1
 
