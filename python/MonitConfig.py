@@ -1,4 +1,4 @@
-#### Info
+from HTMLTableRow import HTMLTableRow
 
 UserInfo = {
   'LogEmail' : 'jskim@cern.ch',
@@ -12,5 +12,17 @@ CRABInfo = {
     '/afs/cern.ch/work/j/jskim/EGammaTnP/For2016_CMSSW_10_2_5/src/EgammaAnalysis/TnPTreeProducer/test/CRAB3/crab_2016/',
     '/afs/cern.ch/work/j/jskim/EGammaTnP/For2016_CMSSW_10_2_5/src/EgammaAnalysis/TnPTreeProducer/test/CRAB3/crab_2017/',
   ],
-
+  'TableContents' : [
+    HTMLTableRow( 'Sample', 'black', 'left' ),
+    HTMLTableRow( 'Scheduler', 'black', 'center' ),
+    HTMLTableRow( 'Unsubmitted', 'gray', 'center' ),
+    HTMLTableRow( 'Cooloff', 'gray', 'center' ),
+    HTMLTableRow( 'Idle', 'graa', 'center' ),
+    HTMLTableRow( 'Running', 'orange', 'center' ),
+    HTMLTableRow( 'Failed', 'red', 'center' ),
+    HTMLTableRow( 'Transferring', 'black', 'center' ),
+    HTMLTableRow( 'Finished', 'green', 'center' ),
+    HTMLTableRow( 'Total', 'black', 'center' ),
+    HTMLTableRow( 'Perct', 'black', 'center' ),
+  ],
 }

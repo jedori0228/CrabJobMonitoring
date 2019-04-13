@@ -30,7 +30,7 @@ def ReadCrabStatus(status):
   ]
 
   ThisCrabStatus = CrabJobStatus()
-  ThisCrabStatus.Empty = True
+  ThisCrabStatus.SetEmpty(True)
 
   #### First check if 'SUBMITFAILED'
   IsSUBMITFAILED = False
@@ -49,14 +49,14 @@ def ReadCrabStatus(status):
     if 'Task name' in line:
       # ['Task', 'name:', '190407_012946:jskim_crab_Legacy2016_RunH']
 
-      ThisCrabStatus.TimeStamp = words[2].split(':')[0]
+      ThisCrabStatus.SetTimeStamp( words[2].split(':')[0] )
 
       USER = os.environ['USER']
-      ThisCrabStatus.Sample = words[2].split(':')[1].replace(USER+'_crab_','')
+      ThisCrabStatus.SetSample( words[2].split(':')[1].replace(USER+'_crab_','') )
 
     elif 'Grid scheduler' in line:
       # ['Grid', 'scheduler', '-', 'Task', 'Worker:', 'crab3@vocms0107.cern.ch', '-', 'crab-prod-tw01']
-      ThisCrabStatus.Scheduler = words[5].replace('crab3@','')
+      ThisCrabStatus.SetScheduler( words[5].replace('crab3@','') )
 
     elif 'Jobs status' in line:
 
@@ -77,11 +77,11 @@ def ReadCrabStatus(status):
   #print StatusLines
 
   if len(StatusLines)>0:
-    ThisCrabStatus.Started = True
+    ThisCrabStatus.SetStarted( True )
 
   if IsSUBMITFAILED:
-    ThisCrabStatus.Empty = False
-    ThisCrabStatus.SubmitFail = True
+    ThisCrabStatus.SetEmpty( False )
+    ThisCrabStatus.SetSubmitFail( True )
     return ThisCrabStatus
 
   for i in range(0,len(StatusKeywords)):
@@ -100,17 +100,17 @@ def ReadCrabStatus(status):
       num = words_Frac[0]
       den = words_Frac[1]
 
-      ThisCrabStatus.JobTotal = den
+      ThisCrabStatus.SetTotal( int(den) )
 
       JobNumbers[i] = int(num)
 
-  ThisCrabStatus.JobUnsubmitted = JobNumbers[0]
-  ThisCrabStatus.JobCooloff = JobNumbers[1]
-  ThisCrabStatus.JobIdle = JobNumbers[2]
-  ThisCrabStatus.JobRunning = JobNumbers[3]
-  ThisCrabStatus.JobFailed = JobNumbers[4]
-  ThisCrabStatus.JobTransferring = JobNumbers[5]
-  ThisCrabStatus.JobFinished = JobNumbers[6]
+  ThisCrabStatus.SetUnsubmitted( JobNumbers[0] )
+  ThisCrabStatus.SetCooloff( JobNumbers[1] )
+  ThisCrabStatus.SetIdle( JobNumbers[2] )
+  ThisCrabStatus.SetRunning( JobNumbers[3] )
+  ThisCrabStatus.SetFailed( JobNumbers[4] )
+  ThisCrabStatus.SetTransferring( JobNumbers[5] )
+  ThisCrabStatus.SetFinished( JobNumbers[6] )
 
   return ThisCrabStatus
 

@@ -44,11 +44,10 @@ for CrabDir in CrabDirs:
     ThisCrabStatus = ReadCrabStatus( CrabStatus )
 
     #### if has failed job, resubmit
-    if ThisCrabStatus.JobFailed > 0:
-      print '--> has '+str(ThisCrabStatus.JobFailed)+' failed jobs, resubmitting...'
+    if ThisCrabStatus.Failed() > 0:
+      print '--> has '+str(ThisCrabStatus.Failed)+' failed jobs, resubmitting...'
       os.system('crab resubmit -d '+Dir)
 
-    #ThisCrabStatus.Print()
     NewJobStatus.append(ThisCrabStatus)
 
 pickle.dump(NewJobStatus, NewJobStatus_file)

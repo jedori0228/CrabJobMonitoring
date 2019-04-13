@@ -29,26 +29,25 @@ htmlheaderlines = open(MonitWD+'/tmp/Skeleton_Status.html').readlines()
 for line in htmlheaderlines:
   out.write(line)
 
+#### Now, body
+#### Get TableContents from MonitConfig
+TableContents = CRABInfo['TableContents']
+
+#### First right the headings
+
 print>>out,'''<body>
 
-<p class="Title"> Status of {1}</p>
+<p class="Title">Status of {1}</p>
 <p class="Clock">Last updated time : {0}</p>
 
 <table border = 1 align="center">
-  <tr>
-    <th>Sample</th>
-    <th>Scheduler</th>
-    <th>Unsubmitted</th>
-    <th>Cooloff</th>
-    <th>Idle</th>
-    <th>Running</th>
-    <th>Failed</th>
-    <th>Transferring</th>
-    <th>Finished</th>
-    <th>Total</th>
-    <th>%</th>
-  </tr>
-'''.format(timestamp,MonitName)
+  <tr>'''.format(timestamp,MonitName)
+
+for TableContent in TableContents:
+  out.write('    <th>'+TableContent.VarName+'</th>\n')
+out.write('  </tr>\n')
+
+#### Now read JobStatus
 
 JobStatus_file = open(MonitWD+'/pkl/JobStatus_'+MonitName+'.pkl', 'rb')
 JobStatus = pickle.load(JobStatus_file)
@@ -57,34 +56,26 @@ for js in JobStatus:
 
   ToWrite = '  <tr>'+'\n'
 
-  #### If submissino failed
-  ToWrite += '    <td align="left">'+js.Sample+'</td>'+'\n'
+  if js.SubmitFail():
 
-  if js.SubmitFail:
+    #### If submission failed,
+    #### write sample name, write SUBMITFAILED in 'Total', and everything else empty
+    for TableContent in TableContents:
+      if TableContent=='Sample':
+        program = '''ToWrite += TableContent.GetHTMLLine(str(js.'''+TableContent.VarName+'''()))'''
+        exec(program)
+      elif TableContent=='Total':
+        ToWrite += '    <td align="center"><font color=red>SUBMITFAILED</font></td>'+'\n'
+      else:
+        ToWrite += '    <td align="center"></td>'+'\n'
 
-    ToWrite += '    <td align="center"><font color=red>SUBMITFAILED</font></td>'+'\n'
-    ToWrite += '    <td align="center"></td>'+'\n'
-    ToWrite += '    <td align="center"></td>'+'\n'
-    ToWrite += '    <td align="center"></td>'+'\n'
-    ToWrite += '    <td align="center"></td>'+'\n'
-    ToWrite += '    <td align="center"></td>'+'\n'
-    ToWrite += '    <td align="center"></td>'+'\n'
-    ToWrite += '    <td align="center"></td>'+'\n'
-    ToWrite += '    <td align="center"></td>'+'\n'
-    ToWrite += '    <td align="center"></td>'+'\n'
+  else:
 
-  else :
+    #### If jobs running, write them..
 
-    ToWrite += '    <td align="centre">'+js.Scheduler+'</td>'+'\n'
-    ToWrite += '    <td align="center"><font color=gray>'+str(js.JobUnsubmitted)+'</font></td>'+'\n'
-    ToWrite += '    <td align="center"><font color=gray>'+str(js.JobCooloff)+'</font></td>'+'\n'
-    ToWrite += '    <td align="center"><font color=gray>'+str(js.JobIdle)+'</font></td>'+'\n'
-    ToWrite += '    <td align="center"><font color=orange>'+str(js.JobRunning)+'</font></td>'+'\n'
-    ToWrite += '    <td align="center"><font color=red>'+str(js.JobFailed)+'</font></td>'+'\n'
-    ToWrite += '    <td align="center"><font color=black>'+str(js.JobTransferring)+'</font></td>'+'\n'
-    ToWrite += '    <td align="center"><font color=green>'+str(js.JobFinished)+'</font></td>'+'\n'
-    ToWrite += '    <td align="center"><font color=black>'+str(js.JobTotal)+'</font></td>'+'\n'
-    ToWrite += '    <td align="center"><font color=black>'+str(round(100.*float(js.JobFinished)/float(js.JobTotal),2))+'</font></td>'+'\n'
+    for TableContent in TableContents:
+      program = '''ToWrite += TableContent.GetHTMLLine(str(js.'''+TableContent.VarName+'''()))'''
+      exec(program)
 
   ToWrite += '  </tr>\n'
   out.write(ToWrite)
