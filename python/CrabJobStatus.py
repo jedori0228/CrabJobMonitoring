@@ -27,6 +27,9 @@ class CrabJobStatus:
     else:
       return False
 
+  def USER(self):
+    return os.environ['USER']
+
   def SetEmpty(self, var):
     self._Empty = var
   def Empty(self):

@@ -12,9 +12,13 @@ CRABInfo = {
     '/afs/cern.ch/work/j/jskim/EGammaTnP/For2016_CMSSW_10_2_5/src/EgammaAnalysis/TnPTreeProducer/test/CRAB3/crab_2016/',
     '/afs/cern.ch/work/j/jskim/EGammaTnP/For2016_CMSSW_10_2_5/src/EgammaAnalysis/TnPTreeProducer/test/CRAB3/crab_2017/',
   ],
+
+  #### HTMLTableRow(varName, color='black', align='center')
+  #### varName are the function names of CrabJobStatus class
   'TableContents' : [
     HTMLTableRow( 'Sample', 'black', 'left' ),
-    HTMLTableRow( 'Scheduler', 'black', 'center' ),
+    #HTMLTableRow( 'Scheduler', 'black', 'center' ),
+    HTMLTableRow( 'USER', 'black', 'center' ),
     HTMLTableRow( 'Unsubmitted', 'gray', 'center' ),
     HTMLTableRow( 'Cooloff', 'gray', 'center' ),
     HTMLTableRow( 'Idle', 'graa', 'center' ),
