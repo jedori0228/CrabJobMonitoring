@@ -60,10 +60,10 @@ def MakeHTML(config):
       #### If submission failed,
       #### write sample name, write SUBMITFAILED in 'Total', and everything else empty
       for TableContent in TableContents:
-        if TableContent=='Sample':
+        if TableContent.VarName=='Sample':
           program = '''ToWrite += TableContent.GetHTMLLine(str(js.'''+TableContent.VarName+'''()))'''
           exec(program)
-        elif TableContent=='Total':
+        elif TableContent.VarName=='Total':
           ToWrite += '    <td align="center"><font color=red>SUBMITFAILED</font></td>'+'\n'
         else:
           ToWrite += '    <td align="center"></td>'+'\n'
