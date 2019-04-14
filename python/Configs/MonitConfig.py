@@ -20,6 +20,7 @@ CRABInfo = {
     HTMLTableRow( 'Sample', 'black', 'left' ),
     #HTMLTableRow( 'Scheduler', 'black', 'center' ),
     #HTMLTableRow( 'USER', 'black', 'center' ),
+    HTMLTableRow( 'TimeStamp', 'black', 'center' ),
     HTMLTableRow( 'Unsubmitted', 'gray', 'center' ),
     HTMLTableRow( 'Cooloff', 'gray', 'center' ),
     HTMLTableRow( 'Idle', 'gray', 'center' ),
