@@ -25,8 +25,16 @@ PrepareMonitoring(config)
 
 while True:
 
-  CheckKerberos(config)
-  CheckProxy(config)
+  status_Kerberos = CheckKerberos(config)
+  status_Proxy = CheckProxy(config)
+
+  if status_Kerberos>1:
+    print '@@@@ Kerberos not valid.. Stopiing the monitoring'
+    exit()
+  if status_Proxy>1:
+    print '@@@@ Proxy not valid.. Stopiing the monitoring'
+    exit()
+
   UpdateJobStatus(config)
   MakeHTML(config)
 

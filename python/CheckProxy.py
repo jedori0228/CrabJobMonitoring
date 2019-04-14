@@ -22,7 +22,7 @@ def CheckProxy(config):
   ## if this is 1, means no proxy set
   if ProxyInfoCheck==1:
     DoMail = True
-    status = 1
+    status = 2
     alerting_msg  = 'GRID proxy is NOT SET\n'
     alerting_msg += "Please log in to "+USER+"@"+HOSTNAME+", and run\n"
     alerting_msg += "voms-proxy-init --voms cms --valid 192:00\n"
@@ -35,7 +35,7 @@ def CheckProxy(config):
     #### Check if expired
     if ProxyTimeLeft == "00:00:00":
       DoMail = True
-      status = 1
+      status = 3
       alerting_msg = 'GRID proxy has been EXPIRED\n'
       alerting_msg += "Please log in to "+USER+"@"+HOSTNAME+", and run\n"
       alerting_msg += "voms-proxy-init --voms cms --valid 192:00\n"

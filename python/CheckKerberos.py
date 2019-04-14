@@ -90,7 +90,7 @@ def CheckKerberos(config):
     alerting_msg  = "Kerberos ticket has been EXPIRED."
     alerting_msg += "Please log in to "+USER+"@"+HOSTNAME+" to renew the ticket\n"
     DoMail=True
-    status= 1
+    status= 2
 
   if renewal_expiring: 
     ### ticket is valid and exists, but is close to expiration and will need password to reset
