@@ -4,6 +4,7 @@ import os,time
 from datetime import datetime, timedelta
 from TimeTools import ParseTicketTime
 import subprocess
+from ShellHelper import ShellHelper
 
 time_renewal=12 #### in hours : This is time before ticket renewal stops when email is sent to let user know to renew manually the kerberos ticket
 
@@ -29,7 +30,7 @@ def CheckProxy(config):
 
   else:
 
-    ProxyTimeLeft = subprocess.check_output('voms-proxy-info | grep "timeleft"',shell=True).split()[2]
+    ProxyTimeLeft = ShellHelper('voms-proxy-info | grep "timeleft"').split()[2]
     # '191:58:45'
 
     #### Check if expired

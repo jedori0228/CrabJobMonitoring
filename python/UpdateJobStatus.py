@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
 import os
-import subprocess
 import pickle
 from ReadCrabStatus import ReadCrabStatus
 from CrabJobStatus import CrabJobStatus
+from ShellHelper import ShellHelper
 
 def UpdateJobStatus(config):
 
@@ -24,7 +24,7 @@ def UpdateJobStatus(config):
       print "@@@@ Dir not exists : "+CrabDir
       continue
 
-    Dirs = subprocess.check_output('ls -1d '+CrabDir+'/crab_*',shell=True).strip('\n').split('\n')
+    Dirs = ShellHelper('ls -1d '+CrabDir+'/crab_*').strip('\n').split('\n')
     for Dir in Dirs:
 
       crab_dir = Dir.split('/')[-1]
@@ -48,7 +48,7 @@ def UpdateJobStatus(config):
       #### if we have requestcache, we will get outputs from crab status
       else:
         #### Now, run ReadCrabStatus()
-        CrabStatus = subprocess.check_output('crab status -d '+Dir,shell=True).split('\n')
+        CrabStatus = ShellHelper('crab status -d '+Dir).split('\n')
         ThisCrabStatus = ReadCrabStatus( CrabStatus )
 
         #### if has failed job, resubmit

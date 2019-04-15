@@ -3,7 +3,7 @@
 import os,time
 from datetime import datetime, timedelta
 from TimeTools import ParseTicketTime
-import subprocess
+from ShellHelper import ShellHelper
 
 time_renewal=12 #### in hours : This is time before ticket renewal stops when email is sent to let user know to renew manually the kerberos ticket
 
@@ -26,7 +26,7 @@ def CheckKerberos(config):
 
   ###-- klist lists kerberos tickets 
 
-  lines_klist = subprocess.check_output('klist').split('\n')
+  lines_klist = ShellHelper('klist').split('\n')
   ticket_info = ''
 
   ### afs_kerb is used to only check afs ticket
