@@ -9,6 +9,7 @@ class CrabJobStatus:
     self._Started = False
 
     self._Sample = ''
+    self._USER = os.environ['USER']
     self._TimeStamp = ''
     self._Scheduler = ''
 
@@ -27,8 +28,10 @@ class CrabJobStatus:
     else:
       return False
 
+  def SetUSER(self, var):
+    self._USER = var
   def USER(self):
-    return os.environ['USER']
+    return self._USER
 
   def SetEmpty(self, var):
     self._Empty = var

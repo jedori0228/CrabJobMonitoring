@@ -51,7 +51,7 @@ def ReadCrabStatus(status):
 
       ThisCrabStatus.SetTimeStamp( words[2].split(':')[0] )
 
-      USER = os.environ['USER']
+      USER = os.environ['USER'] # actually we can just use ThisCrabStatus.USER()
       ThisCrabStatus.SetSample( words[2].split(':')[1].replace(USER+'_crab_','') )
 
     elif 'Grid scheduler' in line:

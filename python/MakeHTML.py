@@ -11,10 +11,11 @@ def MakeHTML(config):
   HTMLDest = UserInfo['HTMLDest']
   WEBDir = UserInfo['WEBDir']
   URLPrefix = UserInfo['URLPrefix']
+  FileName = UserInfo['FileName']
   MonitName = CRABInfo['MonitName']
   MonitWD = os.environ['MonitWD']
 
-  HTMLfilepath = HTMLDest+'/'+MonitName+'.html'
+  HTMLfilepath = HTMLDest+'/'+FileName+'.html'
   out = open(HTMLfilepath,'w')
 
   MonitURL = URLPrefix+HTMLfilepath.replace(WEBDir,'')
@@ -48,8 +49,24 @@ def MakeHTML(config):
 
   #### Now read JobStatus
 
-  JobStatus_file = open(MonitWD+'/pkl/JobStatus_'+MonitName+'.pkl', 'rb')
-  JobStatus = pickle.load(JobStatus_file)
+  JobStatus = []
+
+  if len(MergeStatus)>0:
+
+    print '@@@@ Mering pkls'
+    for pkl in MergeStatus:
+      print '@@@@ - '+pkl
+      JobStatus_file = open(pkl, 'rb')
+      this_JobStatus = pickle.load(JobStatus_file)
+      for js in this_JobStatus:
+        JobStatus.append(js)
+
+  else:
+
+    print '@@@@ Reading from default pkl'
+    print '@@@@ - '+MonitWD+'/pkl/'+FileName+'.pkl'
+    JobStatus_file = open(MonitWD+'/pkl/'+FileName+'.pkl', 'rb')
+    JobStatus = pickle.load(JobStatus_file)
 
   for js in JobStatus:
 

@@ -12,10 +12,10 @@ def UpdateJobStatus(config):
 
   MonitWD = os.environ['MonitWD']
   CrabDirs = CRABInfo['CrabDirs']
-  MonitName = CRABInfo['MonitName']
+  FileName = UserInfo['FileName']
 
   NewJobStatus = []
-  NewJobStatus_filename = MonitWD+'/pkl/JobStatus_'+MonitName+'.pkl'
+  NewJobStatus_filename = MonitWD+'/pkl/'+FileName+'.pkl'
   NewJobStatus_file = open(NewJobStatus_filename,'wb')
 
   for CrabDir in CrabDirs:

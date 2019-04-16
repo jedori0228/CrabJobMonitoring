@@ -3,11 +3,12 @@ from HTMLTableRow import HTMLTableRow
 UserInfo = {
   'LogEmail' : 'jskim@cern.ch',
   'HTMLDest' : '/eos/user/j/jskim/www/HNWR_13TeV/EGammaTnP/CRARBStatus/',
+  'FileName' : 'Status', #### For both .pkl and .html
   'WEBDir' : '/eos/user/j/jskim/www/',
   'URLPrefix' : 'https://jskim.web.cern.ch/jskim/',
 }
 CRABInfo = {
-  'MonitName' : 'EGammaTnPNtuple',
+  'MonitName' : 'EGamma TnP Ntuple', ## Tithe of head, 'Status of <MonitName>' will be shown
   'RunEvery' : 300, ## in seconds
   'CrabDirs' : [
     '/afs/cern.ch/work/j/jskim/EGammaTnP/For2016_CMSSW_10_2_5/src/EgammaAnalysis/TnPTreeProducer/test/CRAB3/crab_2016/',
@@ -19,7 +20,7 @@ CRABInfo = {
   'TableContents' : [
     HTMLTableRow( 'Sample', 'black', 'left' ),
     #HTMLTableRow( 'Scheduler', 'black', 'center' ),
-    #HTMLTableRow( 'USER', 'black', 'center' ),
+    HTMLTableRow( 'USER', 'black', 'center' ),
     HTMLTableRow( 'TimeStamp', 'black', 'center' ),
     HTMLTableRow( 'Unsubmitted', 'gray', 'center' ),
     HTMLTableRow( 'Cooloff', 'gray', 'center' ),
@@ -32,3 +33,9 @@ CRABInfo = {
     HTMLTableRow( 'Perct', 'black', 'center' ),
   ],
 }
+
+#### DO NOT REMOVE
+#### Keep this empty if you are not mering pkls
+MergeStatus = [
+
+]
