@@ -12,7 +12,7 @@ def ShellHelper(cmd):
       break
     except:
       print "[ShellHelper.py] Got error from '"+cmd+"'"
-      print "[ShellHelper.py] Trying again.. (N_Trial = "+N_Trial+")"
+      print "[ShellHelper.py] Trying again.. (N_Trial = "+str(N_Trial)+")"
 
   return out
 
