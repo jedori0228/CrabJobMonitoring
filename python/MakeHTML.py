@@ -12,7 +12,7 @@ def MakeHTML(config):
   WEBDir = UserInfo['WEBDir']
   URLPrefix = UserInfo['URLPrefix']
   FileName = UserInfo['FileName']
-  MonitName = CRABInfo['MonitName']
+  MonitName = MonitoringInfo['MonitName']
   MonitWD = os.environ['MonitWD']
 
   HTMLfilepath = HTMLDest+'/'+FileName+'.html'
@@ -31,7 +31,7 @@ def MakeHTML(config):
 
   #### Now, body
   #### Get TableContents from config
-  TableContents = CRABInfo['TableContents']
+  TableContents = MonitoringInfo['TableContents']
 
   #### First right the headings
 

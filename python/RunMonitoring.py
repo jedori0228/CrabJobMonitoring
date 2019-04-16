@@ -42,5 +42,5 @@ while True:
   print "Sleeping...."
   print "#####################################################"
 
-  time.sleep(CRABInfo['RunEvery'])
+  time.sleep(MonitoringInfo['RunEvery'])
   os.system('kinit -R')

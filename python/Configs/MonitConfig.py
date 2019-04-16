@@ -7,7 +7,7 @@ UserInfo = {
   'WEBDir' : '/eos/user/j/jskim/www/',
   'URLPrefix' : 'https://jskim.web.cern.ch/jskim/',
 }
-CRABInfo = {
+MonitoringInfo = {
   'MonitName' : 'EGamma TnP Ntuple', ## Tithe of head, 'Status of <MonitName>' will be shown
   'RunEvery' : 300, ## in seconds
   'CrabDirs' : [

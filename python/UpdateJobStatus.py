@@ -11,7 +11,7 @@ def UpdateJobStatus(config):
   exec('from '+config+' import *')
 
   MonitWD = os.environ['MonitWD']
-  CrabDirs = CRABInfo['CrabDirs']
+  CrabDirs = MonitoringInfo['CrabDirs']
   FileName = UserInfo['FileName']
 
   NewJobStatus = []
