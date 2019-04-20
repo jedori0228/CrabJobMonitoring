@@ -4,8 +4,13 @@ Example : https://jskim.web.cern.ch/jskim/Public/CrabJobMonitoring/Status.html
 
 You must set cmssw enviroment variables first (i.e., cmsenv), with your crab-submission working directory.
 
-Then run,
+Create a python file, based on python/Configs/MonitConfig.py
+
+E.g.,
 
 ```
-source UpdateStatus.sh
+source setup.sh
+cp python/Configs/MonitConfig.p python/Configs/MyConfig.py
+### edit python/Configs/MyConfig.py
+RunMonitoring.py -i MyConfig
 ```
