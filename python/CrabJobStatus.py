@@ -20,6 +20,7 @@ class CrabJobStatus:
     self._Failed = 0
     self._Transferring = 0
     self._Finished = 0.
+    self._Held = 0
     self._Total = -1.
 
   def AllDone(self):
@@ -92,6 +93,11 @@ class CrabJobStatus:
     self._Transferring = var
   def Transferring(self):
     return self._Transferring
+
+  def SetHeld(self, var):
+    self._Held = var
+  def Held(self):
+    return self._Held
 
   def SetFinished(self, var):
     self._Finished = var

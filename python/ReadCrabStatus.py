@@ -18,16 +18,11 @@ def ReadCrabStatus(status):
   'failed',
   'transferring',
   'finished',
+  'held',
   ]
-  JobNumbers = [
-  0,
-  0,
-  0,
-  0,
-  0,
-  0,
-  0,
-  ]
+  JobNumbers = []
+  for i in range(0,len(StatusKeywords)):
+    JobNumbers.append(0)
 
   ThisCrabStatus = CrabJobStatus()
   ThisCrabStatus.SetEmpty(True)
@@ -111,6 +106,7 @@ def ReadCrabStatus(status):
   ThisCrabStatus.SetFailed( JobNumbers[4] )
   ThisCrabStatus.SetTransferring( JobNumbers[5] )
   ThisCrabStatus.SetFinished( JobNumbers[6] )
+  ThisCrabStatus.SetHeld( JobNumbers[7] )
 
   return ThisCrabStatus
 
