@@ -21,6 +21,7 @@ MonitoringInfo = {
     HTMLTableRow( 'Sample', 'black', 'left' ),
     #HTMLTableRow( 'Scheduler', 'black', 'center' ),
     HTMLTableRow( 'USER', 'black', 'center' ),
+    HTMLTableRow( 'HOSTNAME', 'black', 'center' ),
     HTMLTableRow( 'TimeStamp', 'black', 'center' ),
     HTMLTableRow( 'Unsubmitted', 'gray', 'center' ),
     HTMLTableRow( 'Cooloff', 'gray', 'center' ),
