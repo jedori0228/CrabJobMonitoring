@@ -12,6 +12,7 @@ class CrabJobStatus:
     self._USER = os.environ['USER']
     self._TimeStamp = ''
     self._Scheduler = ''
+    self._HOSTNAME = os.environ['HOSTNAME']
 
     self._Unsubmitted = 0
     self._Cooloff = 0
@@ -63,6 +64,11 @@ class CrabJobStatus:
     self._Scheduler = var
   def Scheduler(self):
     return self._Scheduler
+
+  def SetHOSTNAME(self, var):
+    self._HOSTNAME = var
+  def HOSTNAME(self):
+    return self._HOSTNAME
 
   def SetUnsubmitted(self, var):
     self._Unsubmitted = var
