@@ -39,6 +39,7 @@ def UpdateJobStatus(config):
 
       #### Now, make CrabJobStatus object
       ThisCrabStatus = CrabJobStatus()
+      ThisCrabStatus.SetSample( this_Sample )
 
       #### check if we have requestcache
       #### if not, this is a submitfailed job

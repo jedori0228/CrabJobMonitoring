@@ -13,7 +13,10 @@ def ShellHelper(cmd):
 
     N_Trial = N_Trial+1
     try:
+      #print "[ShellHelper.py] running '"+cmd+"' ..."
       out = subprocess.check_output(cmd,shell=True)
+      break
+    except KeyboardInterrupt:
       break
     except:
       print "[ShellHelper.py] Got error from '"+cmd+"'"
