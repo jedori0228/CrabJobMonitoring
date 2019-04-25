@@ -4,7 +4,7 @@ def ShellHelper(cmd):
 
   out = ''
 
-  MAX_TRIAL = 5
+  MAX_TRIAL = 10
   N_Trial = 0
   while True:
 
@@ -14,7 +14,7 @@ def ShellHelper(cmd):
     N_Trial = N_Trial+1
     try:
       #print "[ShellHelper.py] running '"+cmd+"' ..."
-      out = subprocess.check_output('timeout 10 '+cmd,shell=True)
+      out = subprocess.check_output('timeout 15 '+cmd,shell=True)
       break
     except KeyboardInterrupt:
       break
