@@ -14,12 +14,13 @@ def ShellHelper(cmd):
     N_Trial = N_Trial+1
     try:
       #print "[ShellHelper.py] running '"+cmd+"' ..."
-      out = subprocess.check_output(cmd,shell=True)
+      out = subprocess.check_output('timeout 10 '+cmd,shell=True)
       break
     except KeyboardInterrupt:
       break
-    except:
+    except subprocess.CalledProcessError as e:
       print "[ShellHelper.py] Got error from '"+cmd+"'"
+      print "[ShellHelper.py] Exit code = "+str(e.returncode)
       print "[ShellHelper.py] Trying again.. (N_Trial = "+str(N_Trial)+")"
 
   return out
