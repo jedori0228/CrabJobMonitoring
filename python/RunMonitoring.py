@@ -15,7 +15,17 @@ parser.add_argument('-i', dest='Config', default="")
 args = parser.parse_args()
 
 if args.Config=="":
-  print "Config file is empty"
+  print '@@@@ Config file is empty'
+  print '@@@@ Available Config names :'
+  MonitWD = os.environ['MonitWD']
+  from ShellHelper import ShellHelper
+  cfgFiles = ShellHelper('ls -1 '+MonitWD+'/python/Configs/*.py').split()
+  for cfgFile in cfgFiles:
+    if '__init__.py' in cfgFile:
+      continue
+    if '.py' not in cfgFile:
+      continue
+    print cfgFile.replace(MonitWD+'/python/Configs/','').replace('.py','')
   exit()
 
 config = 'Configs.'+args.Config
