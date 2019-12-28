@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import os
 import datetime
+import pytz
 import argparse
 import pickle
 
@@ -21,10 +22,17 @@ def MakeHTML(config):
   MonitURL = URLPrefix+HTMLfilepath.replace(WEBDir,'')
   print "@@@@ URL : "+MonitURL
 
-  JobStartTime = datetime.datetime.now()
-  timestamp =  JobStartTime.strftime('%Y-%m-%d %H:%M:%S')+' CERN'
+  #### time stamp
 
-  #### first writhe the header
+  tz_kst = pytz.timezone('Asia/Tokyo')
+  tz_eur = pytz.timezone('Europe/Paris')
+  JobStartTime_kst = datetime.datetime.now(tz=tz_kst)
+  JobStartTime_eur = datetime.datetime.now(tz=tz_eur)
+
+  timestamp_kst = JobStartTime_kst.strftime('%Y-%m-%d %H:%M:%S')+' KST'
+  timestamp_eur = JobStartTime_eur.strftime('%Y-%m-%d %H:%M:%S')+' CERN'
+
+  #### first write the header
   htmlheaderlines = open(MonitWD+'/tmp/Skeleton_Status.html').readlines()
   for line in htmlheaderlines:
     out.write(line)
@@ -37,11 +45,11 @@ def MakeHTML(config):
 
   print>>out,'''<body>
 
-<p class="Title">Status of {1}</p>
-<p class="Clock">Last updated time : {0}</p>
+<p class="Title">Status of {0}</p>
+<p class="Clock">Last updated time : {1} ({2})</p>
 
 <table border = 1 align="center">
-  <tr>'''.format(timestamp,MonitName)
+  <tr>'''.format(MonitName,timestamp_kst,timestamp_eur)
 
   for TableContent in TableContents:
     out.write('    <th>'+TableContent.VarName+'</th>\n')
