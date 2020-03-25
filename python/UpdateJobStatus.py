@@ -40,11 +40,11 @@ def UpdateJobStatus(config):
 
   for CrabDir in CrabDirs:
 
-    if not os.path.isdir(CrabDir):
-      print "@@@@ Dir not exists : "+CrabDir
-      continue
+    #if not os.path.isdir(CrabDir):
+    #  print "@@@@ Dir not exists : "+CrabDir
+    #  continue
 
-    Dirs = ShellHelper('ls -1d '+CrabDir+'/crab_*').strip('\n').split('\n')
+    Dirs = ShellHelper('ls -1d '+CrabDir).strip('\n').split('\n')
     for Dir in Dirs:
 
       crab_dir = Dir.split('/')[-1]

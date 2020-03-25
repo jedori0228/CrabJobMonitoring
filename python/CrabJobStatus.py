@@ -9,6 +9,7 @@ class CrabJobStatus:
     self._Started = False
 
     self._Sample = ''
+    self._Year = '-'
     self._USER = os.environ['USER']
     self._TimeStamp = ''
     self._Scheduler = ''
@@ -55,6 +56,11 @@ class CrabJobStatus:
     self._Sample = var
   def Sample(self):
     return self._Sample
+
+  def SetYear(self, var):
+    self._Year = var
+  def Year(self):
+    return self._Year
 
   def SetTimeStamp(self, var):
     self._TimeStamp = var

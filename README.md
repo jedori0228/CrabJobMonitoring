@@ -10,7 +10,7 @@ E.g.,
 
 ```
 source setup.sh
-cp python/Configs/MonitConfig.p python/Configs/MyConfig.py
+cp python/Configs/MonitConfig.py python/Configs/MyConfig.py
 ### edit python/Configs/MyConfig.py
 RunMonitoring.py -i MyConfig
 ```

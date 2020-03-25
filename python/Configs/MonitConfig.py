@@ -11,8 +11,8 @@ MonitoringInfo = {
   'MonitName' : 'EGamma TnP Ntuple', ## Tithe of head, 'Status of <MonitName>' will be shown
   'RunEvery' : 300, ## in seconds
   'CrabDirs' : [
-    '/afs/cern.ch/work/j/jskim/EGammaTnP/For2016_CMSSW_10_2_5/src/EgammaAnalysis/TnPTreeProducer/test/CRAB3/crab_2016/',
-    '/afs/cern.ch/work/j/jskim/EGammaTnP/For2016_CMSSW_10_2_5/src/EgammaAnalysis/TnPTreeProducer/test/CRAB3/crab_2017/',
+    '/afs/cern.ch/work/j/jskim/EGammaTnP/For2016_CMSSW_10_2_5/src/EgammaAnalysis/TnPTreeProducer/test/CRAB3/crab_2016/crab_*',
+    '/afs/cern.ch/work/j/jskim/EGammaTnP/For2016_CMSSW_10_2_5/src/EgammaAnalysis/TnPTreeProducer/test/CRAB3/crab_2017/crab_*',
   ],
 
   #### HTMLTableRow(varName, color='black', align='center')

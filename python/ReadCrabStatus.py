@@ -42,6 +42,16 @@ def ReadCrabStatus(status):
     line = status[i]
     words = line.split()
 
+    if 'CRAB project directory' in line:
+
+      if 'SKFlatMaker' in line:
+        # CRAB project directory:		/afs/cern.ch/work/j/jskim/SKFlatMaker/ForSubmission/Run2Legacy_v4__CMSSW_10_2_18/src/SKFlatMaker/SKFlatMaker/script/CRAB3/Run2Legacy_v4/2016/crab_submission_MC/crab_projects/crab_WRtoNLtoLLJJ_WR2000_N1600_TuneCUETP8M1_13TeV-madgraph-pythia8
+        words2 = line.split('/')
+        for i_word in range(0,len(words2)):
+          if 'crab_submission_' in words2[i_word]:
+            ThisCrabStatus.SetYear( words2[i_word-1] )
+            break
+
     if 'Task name' in line:
       # ['Task', 'name:', '190407_012946:jskim_crab_Legacy2016_RunH']
 
